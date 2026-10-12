@@ -12,6 +12,7 @@ class ChiTietCongViecActivity : ComponentActivity() {
     private lateinit var khung: LinearLayout
     private lateinit var hienTen: TextView
     private lateinit var hienMoTa: TextView
+    private lateinit var hienTrangThai: TextView
     private lateinit var congViec: CongViec
     private val nhanKetQuaChinhSua = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -22,9 +23,17 @@ class ChiTietCongViecActivity : ComponentActivity() {
                 congViec = congViecDaSua
                 hienTen.text = "Tên: ${congViec.tenCongViec}"
                 hienMoTa.text = "Mô tả: ${congViec.moTa}"
+                capNhatKetQuaChoMain()
             }
         }
     }
+    private fun capNhatKetQuaChoMain() {
+        setResult(RESULT_OK, Intent().apply {
+            putExtra("congViec", congViec)
+            putExtra("viTriCongViec", intent.getIntExtra("viTriCongViec", -1))
+        })
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         khung = LinearLayout(this).apply {
@@ -39,6 +48,18 @@ class ChiTietCongViecActivity : ComponentActivity() {
         hienMoTa = TextView(this).apply { text = "Mô tả: ${congViec.moTa}"; textSize = 18f }
         khung.addView(hienTen)
         khung.addView(hienMoTa)
+        hienTrangThai = TextView(this).apply { textSize = 18f }
+        khung.addView(hienTrangThai)
+        hienTrangThai.text = "Trạng thái: ${if (congViec.trangThai) "Đã hoàn thành" else "Chưa hoàn thành"}"
+        capNhatKetQuaChoMain()
+        khung.addView(Button(this).apply {
+            text = "Đánh dấu hoàn thành"
+            setOnClickListener {
+                congViec.trangThai = true
+                hienTrangThai.text = "Trạng thái: Đã hoàn thành"
+                capNhatKetQuaChoMain()
+            }
+        })
         khung.addView(Button(this).apply {
             text = "Chỉnh sửa"
             setOnClickListener {
