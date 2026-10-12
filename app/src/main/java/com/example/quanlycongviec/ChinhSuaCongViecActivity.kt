@@ -5,12 +5,15 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
+import android.widget.Spinner
+import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.activity.ComponentActivity
 
 class ChinhSuaCongViecActivity : ComponentActivity() {
     private lateinit var oTen: EditText
     private lateinit var oMoTa: EditText
+    private lateinit var chonUuTien: Spinner
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val khung = LinearLayout(this).apply {
@@ -29,6 +32,16 @@ class ChinhSuaCongViecActivity : ComponentActivity() {
         }
         khung.addView(oTen)
         khung.addView(oMoTa)
+        val cacMucUuTien = arrayOf("Thấp", "Trung bình", "Cao")
+        chonUuTien = Spinner(this).apply {
+            adapter = ArrayAdapter(this@ChinhSuaCongViecActivity,
+                android.R.layout.simple_spinner_dropdown_item, cacMucUuTien)
+            val mucHienTai = (intent.getSerializableExtra("congViec") as? CongViec)?.mucDoUuTien
+                ?: "Trung bình"
+            setSelection(cacMucUuTien.indexOf(mucHienTai).coerceAtLeast(0))
+        }
+        khung.addView(TextView(this).apply { text = "Mức độ ưu tiên:"; textSize = 17f })
+        khung.addView(chonUuTien)
         khung.addView(Button(this).apply {
             text = "Lưu"
             setOnClickListener {
