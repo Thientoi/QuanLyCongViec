@@ -1,5 +1,6 @@
 package com.example.quanlycongviec
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -28,6 +29,15 @@ class ChinhSuaCongViecActivity : ComponentActivity() {
         }
         khung.addView(oTen)
         khung.addView(oMoTa)
-        khung.addView(Button(this).apply { text = "Lưu" })
+        khung.addView(Button(this).apply {
+            text = "Lưu"
+            setOnClickListener {
+                val ketQua = Intent()
+                ketQua.putExtra("tenCongViec", oTen.text.toString())
+                ketQua.putExtra("moTa", oMoTa.text.toString())
+                setResult(RESULT_OK, ketQua)
+                finish()
+            }
+        })
     }
 }
