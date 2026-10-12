@@ -10,6 +10,13 @@ Branch: `cau1_activity`, `cau2_intent`, `cau3_activity_result`, `cau4_class_kotl
 
 **Đề bổ sung:** lấy 3 chữ số cuối MSV chia 3. Dư 1 = A, dư 2 = B, dư 0 = C.
 
+## Kiểm thử đề bổ sung B
+
+- Mở Chỉnh sửa: mức ưu tiên hiện tại được chọn sẵn.
+- Chọn Thấp, Trung bình hoặc Cao và nhấn Lưu: màn hình chi tiết cập nhật đúng.
+- Nhập tên trống hoặc toàn dấu cách: có thông báo lỗi, không lưu.
+- Chạy `:app:testDebugUnitTest` để kiểm tra logic class.
+
 ## Checklist kiểm tra Câu 5
 
 1. Tạo công việc tên trống hoặc chỉ có dấu cách: hiển thị lỗi, không chuyển trang.
