@@ -16,7 +16,14 @@ class ChiTietCongViecActivity : ComponentActivity() {
     private var moTa = ""
     private val nhanKetQuaChinhSua = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
-    ) { /* cap nhat giao dien o commit tiep theo */ }
+    ) { ketQua ->
+        if (ketQua.resultCode == RESULT_OK) {
+            tenCongViec = ketQua.data?.getStringExtra("tenCongViec").orEmpty()
+            moTa = ketQua.data?.getStringExtra("moTa").orEmpty()
+            hienTen.text = "Tên: $tenCongViec"
+            hienMoTa.text = "Mô tả: $moTa"
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         khung = LinearLayout(this).apply {
