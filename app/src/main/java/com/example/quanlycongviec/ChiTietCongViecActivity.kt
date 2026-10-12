@@ -12,16 +12,17 @@ class ChiTietCongViecActivity : ComponentActivity() {
     private lateinit var khung: LinearLayout
     private lateinit var hienTen: TextView
     private lateinit var hienMoTa: TextView
-    private var tenCongViec = ""
-    private var moTa = ""
+    private lateinit var congViec: CongViec
     private val nhanKetQuaChinhSua = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { ketQua ->
         if (ketQua.resultCode == RESULT_OK) {
-            tenCongViec = ketQua.data?.getStringExtra("tenCongViec").orEmpty()
-            moTa = ketQua.data?.getStringExtra("moTa").orEmpty()
-            hienTen.text = "Tên: $tenCongViec"
-            hienMoTa.text = "Mô tả: $moTa"
+            val congViecDaSua = ketQua.data?.getSerializableExtra("congViec") as? CongViec
+            if (congViecDaSua != null) {
+                congViec = congViecDaSua
+                hienTen.text = "Tên: ${congViec.tenCongViec}"
+                hienMoTa.text = "Mô tả: ${congViec.moTa}"
+            }
         }
     }
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,18 +33,17 @@ class ChiTietCongViecActivity : ComponentActivity() {
         }
         setContentView(khung)
         khung.addView(TextView(this).apply { text = "CHI TIẾT CÔNG VIỆC"; textSize = 24f })
-        tenCongViec = intent.getStringExtra("tenCongViec").orEmpty()
-        moTa = intent.getStringExtra("moTa").orEmpty()
-        hienTen = TextView(this).apply { text = "Tên: $tenCongViec"; textSize = 19f }
-        hienMoTa = TextView(this).apply { text = "Mô tả: $moTa"; textSize = 18f }
+        congViec = (intent.getSerializableExtra("congViec") as? CongViec)
+            ?: CongViec("", "")
+        hienTen = TextView(this).apply { text = "Tên: ${congViec.tenCongViec}"; textSize = 19f }
+        hienMoTa = TextView(this).apply { text = "Mô tả: ${congViec.moTa}"; textSize = 18f }
         khung.addView(hienTen)
         khung.addView(hienMoTa)
         khung.addView(Button(this).apply {
             text = "Chỉnh sửa"
             setOnClickListener {
                 val duLieu = Intent(this@ChiTietCongViecActivity, ChinhSuaCongViecActivity::class.java)
-                duLieu.putExtra("tenCongViec", tenCongViec)
-                duLieu.putExtra("moTa", moTa)
+                duLieu.putExtra("congViec", congViec)
                 nhanKetQuaChinhSua.launch(duLieu)
             }
         })

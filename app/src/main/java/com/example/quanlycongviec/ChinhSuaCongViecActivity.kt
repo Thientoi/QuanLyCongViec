@@ -21,11 +21,11 @@ class ChinhSuaCongViecActivity : ComponentActivity() {
         khung.addView(TextView(this).apply { text = "CHỈNH SỬA CÔNG VIỆC"; textSize = 24f })
         oTen = EditText(this).apply {
             hint = "Tên công việc"
-            setText(intent.getStringExtra("tenCongViec").orEmpty())
+            setText((intent.getSerializableExtra("congViec") as? CongViec)?.tenCongViec.orEmpty())
         }
         oMoTa = EditText(this).apply {
             hint = "Mô tả công việc"
-            setText(intent.getStringExtra("moTa").orEmpty())
+            setText((intent.getSerializableExtra("congViec") as? CongViec)?.moTa.orEmpty())
         }
         khung.addView(oTen)
         khung.addView(oMoTa)
@@ -33,8 +33,11 @@ class ChinhSuaCongViecActivity : ComponentActivity() {
             text = "Lưu"
             setOnClickListener {
                 val ketQua = Intent()
-                ketQua.putExtra("tenCongViec", oTen.text.toString())
-                ketQua.putExtra("moTa", oMoTa.text.toString())
+                val congViec = (intent.getSerializableExtra("congViec") as? CongViec)
+                    ?: CongViec("", "")
+                congViec.tenCongViec = oTen.text.toString()
+                congViec.moTa = oMoTa.text.toString()
+                ketQua.putExtra("congViec", congViec)
                 setResult(RESULT_OK, ketQua)
                 finish()
             }

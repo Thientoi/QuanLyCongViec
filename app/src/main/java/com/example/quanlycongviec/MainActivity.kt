@@ -37,8 +37,8 @@ class MainActivity : ComponentActivity() {
             text = "Tạo công việc"
             setOnClickListener {
                 val duLieu = Intent(this@MainActivity, ChiTietCongViecActivity::class.java)
-                duLieu.putExtra("tenCongViec", oTenCongViec.text.toString())
-                duLieu.putExtra("moTa", oMoTa.text.toString())
+                val congViec = CongViec(oTenCongViec.text.toString(), oMoTa.text.toString())
+                duLieu.putExtra("congViec", congViec)
                 startActivity(duLieu)
             }
         })
