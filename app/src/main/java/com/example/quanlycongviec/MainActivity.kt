@@ -1,6 +1,7 @@
 package com.example.quanlycongviec
 
 import android.os.Bundle
+import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.TextView
@@ -14,6 +15,8 @@ class MainActivity : ComponentActivity() {
             orientation = LinearLayout.VERTICAL
             setPadding(36, 48, 36, 36)
         }
+        val oTenCongViec = EditText(this).apply { hint = "Tên công việc" }
+        val oMoTa = EditText(this).apply { hint = "Mô tả công việc" }
         cuon.addView(khung)
         setContentView(cuon)
         khung.addView(TextView(this).apply {
@@ -25,5 +28,7 @@ class MainActivity : ComponentActivity() {
             textSize = 17f
             setPadding(0, 24, 0, 24)
         })
+        khung.addView(oTenCongViec)
+        khung.addView(oMoTa)
     }
 }
