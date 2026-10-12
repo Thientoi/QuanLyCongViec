@@ -23,6 +23,7 @@ class ChiTietCongViecActivity : ComponentActivity() {
                 congViec = congViecDaSua
                 hienTen.text = "Tên: ${congViec.tenCongViec}"
                 hienMoTa.text = "Mô tả: ${congViec.moTa}"
+                hienTrangThai.text = "Trạng thái: ${if (congViec.trangThai) "Đã hoàn thành" else "Chưa hoàn thành"}"
                 capNhatKetQuaChoMain()
             }
         }
