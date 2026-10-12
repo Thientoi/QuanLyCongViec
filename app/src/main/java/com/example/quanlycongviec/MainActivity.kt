@@ -42,7 +42,7 @@ class MainActivity : ComponentActivity() {
             textSize = 23f
         })
         khung.addView(TextView(this).apply {
-            text = "Họ tên: HO TEN SINH VIEN\nMã sinh viên: MA SINH VIEN\nLớp HP: LOP HP"
+            text = "Họ tên: Nguyễn Thiện Tới\nMã sinh viên: 23115141122125\nLớp HP: 126lttd01"
             textSize = 17f
             setPadding(0, 24, 0, 24)
         })
