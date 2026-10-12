@@ -56,6 +56,7 @@ class ChinhSuaCongViecActivity : ComponentActivity() {
                     ?: CongViec("", "")
                 congViec.tenCongViec = ten
                 congViec.moTa = oMoTa.text.toString()
+                congViec.mucDoUuTien = chonUuTien.selectedItem.toString()
                 ketQua.putExtra("congViec", congViec)
                 setResult(RESULT_OK, ketQua)
                 finish()

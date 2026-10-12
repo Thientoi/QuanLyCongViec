@@ -13,6 +13,7 @@ class ChiTietCongViecActivity : ComponentActivity() {
     private lateinit var hienTen: TextView
     private lateinit var hienMoTa: TextView
     private lateinit var hienTrangThai: TextView
+    private lateinit var hienUuTien: TextView
     private lateinit var congViec: CongViec
     private val nhanKetQuaChinhSua = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -23,6 +24,7 @@ class ChiTietCongViecActivity : ComponentActivity() {
                 congViec = congViecDaSua
                 hienTen.text = "Tên: ${congViec.tenCongViec}"
                 hienMoTa.text = "Mô tả: ${congViec.moTa}"
+                hienUuTien.text = "Ưu tiên: ${congViec.mucDoUuTien}"
                 hienTrangThai.text = "Trạng thái: ${if (congViec.trangThai) "Đã hoàn thành" else "Chưa hoàn thành"}"
                 capNhatKetQuaChoMain()
             }
@@ -49,6 +51,11 @@ class ChiTietCongViecActivity : ComponentActivity() {
         hienMoTa = TextView(this).apply { text = "Mô tả: ${congViec.moTa}"; textSize = 18f }
         khung.addView(hienTen)
         khung.addView(hienMoTa)
+        hienUuTien = TextView(this).apply {
+            text = "Ưu tiên: ${congViec.mucDoUuTien}"
+            textSize = 18f
+        }
+        khung.addView(hienUuTien)
         hienTrangThai = TextView(this).apply { textSize = 18f }
         khung.addView(hienTrangThai)
         hienTrangThai.text = "Trạng thái: ${if (congViec.trangThai) "Đã hoàn thành" else "Chưa hoàn thành"}"
