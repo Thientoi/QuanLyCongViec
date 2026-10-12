@@ -1,6 +1,8 @@
 package com.example.quanlycongviec
 
+import android.app.AlertDialog
 import android.content.Intent
+import androidx.activity.result.contract.ActivityResultContracts
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -11,6 +13,19 @@ import android.widget.TextView
 import androidx.activity.ComponentActivity
 
 class MainActivity : ComponentActivity() {
+    private val danhSachCongViec = mutableListOf<CongViec>()
+    private val moChiTiet = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { ketQua ->
+        if (ketQua.resultCode == RESULT_OK) {
+            val congViec = ketQua.data?.getSerializableExtra("congViec") as? CongViec
+            val viTri = ketQua.data?.getIntExtra("viTriCongViec", -1) ?: -1
+            if (congViec != null && viTri in danhSachCongViec.indices) {
+                danhSachCongViec[viTri] = congViec
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val cuon = ScrollView(this)
@@ -44,13 +59,35 @@ class MainActivity : ComponentActivity() {
                 }
                 val duLieu = Intent(this@MainActivity, ChiTietCongViecActivity::class.java)
                 val congViec = CongViec(ten, oMoTa.text.toString().trim())
+                danhSachCongViec.add(congViec)
                 duLieu.putExtra("congViec", congViec)
-                startActivity(duLieu)
+                duLieu.putExtra("viTriCongViec", danhSachCongViec.lastIndex)
+                moChiTiet.launch(duLieu)
             }
         })
         khung.addView(Button(this).apply {
             text = "Xem danh sách công việc"
-            setOnClickListener { Toast.makeText(this@MainActivity, "Danh sách đang trống", Toast.LENGTH_SHORT).show() }
+            setOnClickListener {
+                if (danhSachCongViec.isEmpty()) {
+                    Toast.makeText(this@MainActivity, "Danh sách đang trống", Toast.LENGTH_SHORT).show()
+                } else {
+                    val tenCongViec = danhSachCongViec.map {
+                        "${it.tenCongViec} — ${if (it.trangThai) "Đã hoàn thành" else "Chưa hoàn thành"}"
+                    }.toTypedArray()
+                    AlertDialog.Builder(this@MainActivity)
+                        .setTitle("Danh sách công việc")
+                        .setItems(tenCongViec) { _, viTri ->
+                            moChiTiet.launch(
+                                Intent(this@MainActivity, ChiTietCongViecActivity::class.java).apply {
+                                    putExtra("congViec", danhSachCongViec[viTri])
+                                    putExtra("viTriCongViec", viTri)
+                                }
+                            )
+                        }
+                        .setNegativeButton("Đóng", null)
+                        .show()
+                }
+            }
         })
     }
 }
