@@ -1,5 +1,6 @@
 package com.example.quanlycongviec
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -34,7 +35,12 @@ class MainActivity : ComponentActivity() {
         khung.addView(oMoTa)
         khung.addView(Button(this).apply {
             text = "Tạo công việc"
-            setOnClickListener { Toast.makeText(this@MainActivity, "Đã nhấn Tạo công việc", Toast.LENGTH_SHORT).show() }
+            setOnClickListener {
+                val duLieu = Intent(this@MainActivity, ChiTietCongViecActivity::class.java)
+                duLieu.putExtra("tenCongViec", oTenCongViec.text.toString())
+                duLieu.putExtra("moTa", oMoTa.text.toString())
+                startActivity(duLieu)
+            }
         })
         khung.addView(Button(this).apply {
             text = "Xem danh sách công việc"
