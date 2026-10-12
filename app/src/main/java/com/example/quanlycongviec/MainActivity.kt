@@ -36,8 +36,14 @@ class MainActivity : ComponentActivity() {
         khung.addView(Button(this).apply {
             text = "Tạo công việc"
             setOnClickListener {
+                val ten = oTenCongViec.text.toString().trim()
+                if (ten.isEmpty()) {
+                    oTenCongViec.error = "Không được để trống tên công việc"
+                    oTenCongViec.requestFocus()
+                    return@setOnClickListener
+                }
                 val duLieu = Intent(this@MainActivity, ChiTietCongViecActivity::class.java)
-                val congViec = CongViec(oTenCongViec.text.toString(), oMoTa.text.toString())
+                val congViec = CongViec(ten, oMoTa.text.toString().trim())
                 duLieu.putExtra("congViec", congViec)
                 startActivity(duLieu)
             }

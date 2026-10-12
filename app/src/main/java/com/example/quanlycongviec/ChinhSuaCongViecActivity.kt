@@ -32,10 +32,16 @@ class ChinhSuaCongViecActivity : ComponentActivity() {
         khung.addView(Button(this).apply {
             text = "Lưu"
             setOnClickListener {
+                val ten = oTen.text.toString().trim()
+                if (ten.isEmpty()) {
+                    oTen.error = "Tên công việc không được để trống"
+                    oTen.requestFocus()
+                    return@setOnClickListener
+                }
                 val ketQua = Intent()
                 val congViec = (intent.getSerializableExtra("congViec") as? CongViec)
                     ?: CongViec("", "")
-                congViec.tenCongViec = oTen.text.toString()
+                congViec.tenCongViec = ten
                 congViec.moTa = oMoTa.text.toString()
                 ketQua.putExtra("congViec", congViec)
                 setResult(RESULT_OK, ketQua)
