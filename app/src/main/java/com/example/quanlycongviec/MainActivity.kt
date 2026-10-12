@@ -1,7 +1,9 @@
 package com.example.quanlycongviec
 
 import android.os.Bundle
+import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.TextView
@@ -30,5 +32,13 @@ class MainActivity : ComponentActivity() {
         })
         khung.addView(oTenCongViec)
         khung.addView(oMoTa)
+        khung.addView(Button(this).apply {
+            text = "Tạo công việc"
+            setOnClickListener { Toast.makeText(this@MainActivity, "Đã nhấn Tạo công việc", Toast.LENGTH_SHORT).show() }
+        })
+        khung.addView(Button(this).apply {
+            text = "Xem danh sách công việc"
+            setOnClickListener { Toast.makeText(this@MainActivity, "Danh sách đang trống", Toast.LENGTH_SHORT).show() }
+        })
     }
 }
