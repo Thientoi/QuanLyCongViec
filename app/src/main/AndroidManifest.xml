@@ -5,6 +5,7 @@
         android:label="Quản lý công việc"
         android:supportsRtl="true"
         android:theme="@style/Theme.QuanLyCongViec">
+        <activity android:name=".ChinhSuaCongViecActivity" android:exported="false" />
         <activity android:name=".ChiTietCongViecActivity" android:exported="false" />
         <activity android:name=".MainActivity" android:exported="true">
             <intent-filter>
