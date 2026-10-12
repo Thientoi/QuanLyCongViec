@@ -15,5 +15,13 @@ class ChiTietCongViecActivity : ComponentActivity() {
         }
         setContentView(khung)
         khung.addView(TextView(this).apply { text = "CHI TIẾT CÔNG VIỆC"; textSize = 24f })
+        khung.addView(TextView(this).apply {
+            text = "Tên: ${intent.getStringExtra("tenCongViec").orEmpty()}"
+            textSize = 19f
+        })
+        khung.addView(TextView(this).apply {
+            text = "Mô tả: ${intent.getStringExtra("moTa").orEmpty()}"
+            textSize = 18f
+        })
     }
 }
